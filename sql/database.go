@@ -88,6 +88,11 @@ func (d *Database) MigrateUp(ctx context.Context) error {
 	return migrate.Up(ctx, d.DB.DB, fsys)
 }
 
+func (d *Database) MigrateDown(ctx context.Context) error {
+	fsys := d.getMigrations()
+	return migrate.Down(ctx, d.DB.DB, fsys)
+}
+
 func (d *Database) getMigrations() fs.FS {
 	fsys, err := fs.Sub(migrations, "migrations")
 	if err != nil {

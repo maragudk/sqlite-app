@@ -2,11 +2,9 @@ package sqltest
 
 import (
 	"context"
-	"os"
 	"testing"
 
 	"github.com/maragudk/env"
-	"github.com/maragudk/migrate"
 
 	"github.com/maragudk/sqlite-app/sql"
 )
@@ -25,13 +23,14 @@ func CreateDatabase(t *testing.T) *sql.Database {
 	if err := db.Connect(); err != nil {
 		t.Fatal(err)
 	}
-	if err := migrate.Up(context.Background(), db.DB.DB, os.DirFS("../sql/migrations")); err != nil {
+
+	if err := db.MigrateUp(context.Background()); err != nil {
 		t.Fatal(err)
 	}
-	if err := migrate.Down(context.Background(), db.DB.DB, os.DirFS("../sql/migrations")); err != nil {
+	if err := db.MigrateDown(context.Background()); err != nil {
 		t.Fatal(err)
 	}
-	if err := migrate.Up(context.Background(), db.DB.DB, os.DirFS("../sql/migrations")); err != nil {
+	if err := db.MigrateUp(context.Background()); err != nil {
 		t.Fatal(err)
 	}
 
