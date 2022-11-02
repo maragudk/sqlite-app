@@ -1,3 +1,7 @@
+.PHONY: clean
+clean:
+	rm -f app.db*
+
 .PHONY: cover
 cover:
 	go tool cover -html=cover.out
@@ -5,6 +9,14 @@ cover:
 .PHONY: lint
 lint:
 	golangci-lint run
+
+.PHONY: open
+open:
+	open http://localhost:8080
+
+.PHONY: start
+start:
+	go run ./cmd/server
 
 .PHONY: test
 test:
