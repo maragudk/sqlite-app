@@ -23,16 +23,16 @@ type Server struct {
 	server   *http.Server
 }
 
-type Options struct {
+type NewServerOptions struct {
 	Database *sql.Database
 	Host     string
 	Log      *log.Logger
 	Port     int
 }
 
-// New Server.
+// NewServer returns an initialized, but unstarted Server.
 // If no logger is provided, logs are discarded.
-func New(opts Options) *Server {
+func NewServer(opts NewServerOptions) *Server {
 	if opts.Log == nil {
 		opts.Log = log.New(io.Discard, "", 0)
 	}
