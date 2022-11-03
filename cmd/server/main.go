@@ -37,7 +37,7 @@ func main() {
 		log.Fatalln("Error connecting to database:", err)
 	}
 
-	s := http.New(http.Options{
+	s := http.NewServer(http.NewServerOptions{
 		Database: db,
 		Host:     env.GetStringOrDefault("HOST", ""),
 		Log:      log,
