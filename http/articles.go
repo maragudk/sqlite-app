@@ -27,24 +27,33 @@ func (e httpError) StatusCode() int {
 	return e.Code
 }
 
-type tocGetter interface {
+type articlesGetter interface {
 	GetTOC(ctx context.Context) ([]model.Article, error)
+	SearchArticles(ctx context.Context, search string) ([]model.Article, error)
 }
 
-func Home(mux chi.Router, log *log.Logger, db tocGetter) {
+func Home(mux chi.Router, log *log.Logger, db articlesGetter) {
 	mux.Get("/", ghttp.Adapt(func(w http.ResponseWriter, r *http.Request) (g.Node, error) {
-		articles, err := db.GetTOC(r.Context())
+		search := r.URL.Query().Get("search")
+
+		var articles []model.Article
+		var err error
+		if search != "" {
+			articles, err = db.SearchArticles(r.Context(), search)
+		} else {
+			articles, err = db.GetTOC(r.Context())
+		}
 		if err != nil {
-			log.Println("Error getting articles TOC:", err)
+			log.Println("Error getting/searching articles:", err)
 			return html.ErrorPage(), err
 		}
 
-		return html.HomePage(articles), nil
+		return html.HomePage(articles, search), nil
 	}))
 }
 
 type articleGetter interface {
-	GetArticle(ctx context.Context, id int) (*model.Article, error)
+	GetArticle(ctx context.Context, id int, search string) (*model.Article, error)
 }
 
 func Articles(mux chi.Router, log *log.Logger, db articleGetter) {
@@ -54,7 +63,9 @@ func Articles(mux chi.Router, log *log.Logger, db articleGetter) {
 			return html.ErrorPage(), httpError{http.StatusBadRequest}
 		}
 
-		a, err := db.GetArticle(r.Context(), id)
+		search := r.URL.Query().Get("search")
+
+		a, err := db.GetArticle(r.Context(), id, search)
 		if err != nil {
 			log.Println("Error getting article:", err)
 			return html.ErrorPage(), err
@@ -64,7 +75,7 @@ func Articles(mux chi.Router, log *log.Logger, db articleGetter) {
 			return html.NotFoundPage(), httpError{http.StatusNotFound}
 		}
 
-		return html.ArticlePage(*a), nil
+		return html.ArticlePage(*a, search), nil
 	}))
 }
 
