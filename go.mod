@@ -7,8 +7,8 @@ require (
 	github.com/jmoiron/sqlx v1.3.5
 	github.com/maragudk/env v0.1.2
 	github.com/maragudk/errors v0.1.1
-	github.com/maragudk/gomponents v0.19.0
-	github.com/maragudk/gomponents-heroicons v0.4.0
+	github.com/maragudk/gomponents v0.20.0
+	github.com/maragudk/gomponents-heroicons v0.5.0
 	github.com/maragudk/migrate v0.4.3
 	github.com/mattn/go-sqlite3 v1.14.16
 	github.com/stretchr/testify v1.8.1
