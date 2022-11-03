@@ -6,11 +6,15 @@ kill_timeout = 5
 processes = []
 
 [env]
-  DATABASE_URL = ":memory:"
+  DATABASE_URL = "file:/data/app.db"
 
 [experimental]
   allowed_public_ports = []
   auto_rollback = true
+
+[mounts]
+  destination = "/data"
+  source = "data"
 
 [[services]]
   http_checks = []
