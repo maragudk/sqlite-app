@@ -208,6 +208,8 @@ github.com/maragudk/errors v0.1.1 h1:DOEajlzoJ6Hyx3BdzAZCq8z9dJR5g9LHJELBrNnh7Yc
 github.com/maragudk/errors v0.1.1/go.mod h1:6YewPLf5sbfdMje7CoPCwLbJ92uLx4dHZNaYnSFAXGM=
 github.com/maragudk/gomponents v0.19.0 h1:OtcWjsavl4in6o8ZE8tX21b8Dk0sgm85PH/F5LWPVzg=
 github.com/maragudk/gomponents v0.19.0/go.mod h1:nHkNnZL6ODgMBeJhrZjkMHVvNdoYsfmpKB2/hjdQ0Hg=
+github.com/maragudk/gomponents-heroicons v0.4.0 h1:B5X1rHupWcMgn4edqKyyQL5OmNzyIdpHimTzyDX7cjE=
+github.com/maragudk/gomponents-heroicons v0.4.0/go.mod h1:kWbLrt7ZSKKn7aFz15uM7ybhjC5v97IxJRxJMnn1FPs=
 github.com/maragudk/migrate v0.4.3 h1:3NrpSzNdCSSPgN/xwkEduEwqrBIRewSEvtN+mhMS6zc=
 github.com/maragudk/migrate v0.4.3/go.mod h1:vhmL4s+Xz75KU6DPZWRfqb45YyqjYQfcXliA1DsYzvY=
 github.com/matryer/is v1.4.0 h1:sosSmIWwkYITGrxZ25ULNDeKiMNzFSr4V/eqBQP0PeE=

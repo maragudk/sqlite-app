@@ -1,3 +1,7 @@
+.PHONY: build
+build:
+	go build -tags fts5 ./cmd/server
+
 .PHONY: clean
 clean:
 	rm -f app.db*
@@ -16,9 +20,9 @@ open:
 
 .PHONY: start
 start:
-	go run ./cmd/server
+	go run -tags fts5 ./cmd/server
 
 .PHONY: test
 test:
-	go test -coverprofile=cover.out -shuffle on ./...
+	go test -tags fts5 -coverprofile=cover.out -shuffle on ./...
 
