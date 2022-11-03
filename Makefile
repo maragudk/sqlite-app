@@ -14,6 +14,14 @@ cover:
 lint:
 	golangci-lint run
 
+.PHONY: migrate-down
+migrate-down:
+	go run ./cmd/migrate down
+
+.PHONY: migrate-up
+migrate-up:
+	go run ./cmd/migrate up
+
 .PHONY: open
 open:
 	open http://localhost:8080
