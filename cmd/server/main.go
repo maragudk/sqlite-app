@@ -5,17 +5,22 @@ import (
 	"log"
 	"os"
 	"os/signal"
-	"sync"
 	"syscall"
 	"time"
 
 	"github.com/maragudk/env"
+	"github.com/maragudk/errors"
+	"golang.org/x/sync/errgroup"
 
 	"github.com/maragudk/sqlite-app/http"
 	"github.com/maragudk/sqlite-app/sql"
 )
 
 func main() {
+	os.Exit(start())
+}
+
+func start() int {
 	log := log.New(os.Stderr, "", log.Ldate|log.Ltime|log.Lshortfile|log.LUTC)
 	log.Println("Starting")
 
@@ -34,7 +39,8 @@ func main() {
 	})
 
 	if err := db.Connect(); err != nil {
-		log.Fatalln("Error connecting to database:", err)
+		log.Println("Error connecting to database:", err)
+		return 1
 	}
 
 	s := http.NewServer(http.NewServerOptions{
@@ -44,22 +50,31 @@ func main() {
 		Port:     env.GetIntOrDefault("PORT", 8080),
 	})
 
-	var wg sync.WaitGroup
+	eg, ctx := errgroup.WithContext(ctx)
 
-	wg.Add(1)
-	go func() {
+	eg.Go(func() error {
 		if err := s.Start(); err != nil {
-			log.Fatalln("Error starting server:", err)
+			return errors.Wrap(err, "error starting server")
 		}
-		wg.Done()
-	}()
+		return nil
+	})
 
 	<-ctx.Done()
 	log.Println("Stopping")
 
-	if err := s.Stop(); err != nil {
-		log.Fatalln("Error stopping server:", err)
+	eg.Go(func() error {
+		if err := s.Stop(); err != nil {
+			return errors.Wrap(err, "error stopping server")
+		}
+		return nil
+	})
+
+	if err := eg.Wait(); err != nil {
+		log.Println("Error:", err)
+		return 1
 	}
 
-	wg.Wait()
+	log.Println("Stopped")
+
+	return 0
 }
