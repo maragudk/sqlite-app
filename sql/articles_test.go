@@ -105,7 +105,7 @@ func TestDatabase_SearchArticles(t *testing.T) {
 	db := sqltest.CreateDatabase(t)
 	err := db.CreateArticle(context.Background(), model.Article{
 		Title:   "The Foo is great",
-		Content: "I wish that bar was also.",
+		Content: "I wish that bar was also, but who am I to complain?",
 	})
 	require.NoError(t, err)
 
@@ -115,15 +115,14 @@ func TestDatabase_SearchArticles(t *testing.T) {
 	})
 	require.NoError(t, err)
 
-	t.Run("searches article titles and highlights", func(t *testing.T) {
+	t.Run("searches article titles and content and highlights and makes snippets", func(t *testing.T) {
 		as, err := db.SearchArticles(context.Background(), "bar")
 		require.NoError(t, err)
 		require.Len(t, as, 2)
 
 		require.Equal(t, "␟Bar␟ me up a notch", as[0].Title)
 		require.Equal(t, "Boo ya.", as[0].Content)
-
 		require.Equal(t, "The Foo is great", as[1].Title)
-		require.Equal(t, "I wish that ␟bar␟ was also.", as[1].Content)
+		require.Equal(t, "I wish that ␟bar␟ was also, but who", as[1].Content)
 	})
 }
