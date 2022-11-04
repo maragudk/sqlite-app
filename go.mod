@@ -12,6 +12,7 @@ require (
 	github.com/maragudk/migrate v0.4.3
 	github.com/mattn/go-sqlite3 v1.14.16
 	github.com/stretchr/testify v1.8.1
+	golang.org/x/sync v0.0.0-20190911185100-cd5d95a43a6e
 )
 
 require (
