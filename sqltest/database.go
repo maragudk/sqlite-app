@@ -27,12 +27,6 @@ func CreateDatabase(t *testing.T) *sql.Database {
 	if err := db.MigrateUp(context.Background()); err != nil {
 		t.Fatal(err)
 	}
-	if err := db.MigrateDown(context.Background()); err != nil {
-		t.Fatal(err)
-	}
-	if err := db.MigrateUp(context.Background()); err != nil {
-		t.Fatal(err)
-	}
 
 	return db
 }
