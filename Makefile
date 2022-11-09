@@ -1,6 +1,6 @@
 .PHONY: build
 build:
-	go build -tags fts5 ./cmd/server
+	go build -tags "sqlite_fts5 sqlite_foreign_keys" ./cmd/server
 
 .PHONY: clean
 clean:
@@ -28,9 +28,9 @@ open:
 
 .PHONY: start
 start:
-	go run -tags fts5 ./cmd/server
+	go run -tags "sqlite_fts5 sqlite_foreign_keys" ./cmd/server
 
 .PHONY: test
 test:
-	go test -tags fts5 -coverprofile=cover.out -shuffle on ./...
+	go test -tags "sqlite_fts5 sqlite_foreign_keys" -coverprofile=cover.out -shuffle on ./...
 
