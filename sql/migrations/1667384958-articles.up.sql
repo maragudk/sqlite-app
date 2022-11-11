@@ -9,5 +9,5 @@ create table articles (
 create index articles_created_idx on articles (created);
 
 create trigger articles_updated_timestamp after update on articles begin
-  update articles set updated = (strftime('%Y-%m-%dT%H:%M:%fZ')) where id = old.id;
+  update articles set updated = strftime('%Y-%m-%dT%H:%M:%fZ') where id = old.id;
 end;
