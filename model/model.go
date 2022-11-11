@@ -19,9 +19,12 @@ type Time struct {
 	T time.Time
 }
 
+// rfc3339Milli is like time.RFC3339Nano, but with millisecond precision.
+const rfc3339Milli = "2006-01-02T15:04:05.999Z07:00"
+
 // Value satisfies driver.Valuer interface.
 func (t *Time) Value() (driver.Value, error) {
-	return t.T.Format(time.RFC3339Nano), nil
+	return t.T.UTC().Format(rfc3339Milli), nil
 }
 
 // Scan satisfies sql.Scanner interface.
@@ -35,12 +38,12 @@ func (t *Time) Scan(src any) error {
 		return errors.Newf("error scanning time, got %+v", src)
 	}
 
-	parsedT, err := time.Parse(time.RFC3339Nano, s)
+	parsedT, err := time.Parse(rfc3339Milli, s)
 	if err != nil {
 		return err
 	}
 
-	t.T = parsedT
+	t.T = parsedT.UTC()
 
 	return nil
 }
