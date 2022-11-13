@@ -16,11 +16,11 @@ lint:
 
 .PHONY: migrate-down
 migrate-down:
-	go run ./cmd/migrate down
+	go run -tags "sqlite_fts5 sqlite_foreign_keys" ./cmd/migrate down
 
 .PHONY: migrate-up
 migrate-up:
-	go run ./cmd/migrate up
+	go run -tags "sqlite_fts5 sqlite_foreign_keys" ./cmd/migrate up
 
 .PHONY: open
 open:
