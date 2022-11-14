@@ -19,8 +19,9 @@ type Time struct {
 	T time.Time
 }
 
-// rfc3339Milli is like time.RFC3339Nano, but with millisecond precision.
-const rfc3339Milli = "2006-01-02T15:04:05.999Z07:00"
+// rfc3339Milli is like time.RFC3339Nano, but with millisecond precision, and fractional seconds do not have trailing
+// zeros removed.
+const rfc3339Milli = "2006-01-02T15:04:05.000Z07:00"
 
 // Value satisfies driver.Valuer interface.
 func (t *Time) Value() (driver.Value, error) {
