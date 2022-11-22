@@ -1,4 +1,4 @@
-# sqlite-app
+# litefs-app
 
 Companion app to [Distributed SQLite with LiteFS](https://www.golang.dk/articles/distributed-sqlite-with-litefs).
 
