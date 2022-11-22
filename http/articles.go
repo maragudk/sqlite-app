@@ -11,8 +11,8 @@ import (
 	g "github.com/maragudk/gomponents"
 	ghttp "github.com/maragudk/gomponents/http"
 
-	"github.com/maragudk/sqlite-app/html"
-	"github.com/maragudk/sqlite-app/model"
+	"github.com/maragudk/litefs-app/html"
+	"github.com/maragudk/litefs-app/model"
 )
 
 type httpError struct {
@@ -32,7 +32,7 @@ type articlesGetter interface {
 	SearchArticles(ctx context.Context, search string) ([]model.Article, error)
 }
 
-func Home(mux chi.Router, log *log.Logger, db articlesGetter) {
+func Home(mux chi.Router, log *log.Logger, db articlesGetter, region string) {
 	mux.Get("/", ghttp.Adapt(func(w http.ResponseWriter, r *http.Request) (g.Node, error) {
 		search := r.URL.Query().Get("search")
 
@@ -48,7 +48,7 @@ func Home(mux chi.Router, log *log.Logger, db articlesGetter) {
 			return html.ErrorPage(), err
 		}
 
-		return html.HomePage(articles, search), nil
+		return html.HomePage(articles, search, region), nil
 	}))
 }
 

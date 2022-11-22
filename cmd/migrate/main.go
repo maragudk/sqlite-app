@@ -8,7 +8,7 @@ import (
 	"github.com/maragudk/env"
 	"github.com/maragudk/migrate"
 
-	"github.com/maragudk/sqlite-app/sql"
+	"github.com/maragudk/litefs-app/sql"
 )
 
 func main() {

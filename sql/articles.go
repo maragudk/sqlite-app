@@ -6,7 +6,7 @@ import (
 	"errors"
 	"strings"
 
-	"github.com/maragudk/sqlite-app/model"
+	"github.com/maragudk/litefs-app/model"
 )
 
 // GetTOC of all articles with no content.

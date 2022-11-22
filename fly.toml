@@ -1,6 +1,6 @@
-# fly.toml file generated for sqlite-app on 2022-11-03T11:52:26+01:00
+# fly.toml file generated for litefs-app on 2022-11-22T10:42:41+01:00
 
-app = "sqlite-app"
+app = "litefs-app"
 kill_signal = "SIGINT"
 kill_timeout = 5
 processes = []
@@ -11,9 +11,10 @@ processes = []
 [experimental]
   allowed_public_ports = []
   auto_rollback = true
+  enable_consul = true
 
 [mounts]
-  destination = "/data"
+  destination = "/mnt/data"
   source = "data"
 
 [[services]]

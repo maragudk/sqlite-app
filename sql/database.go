@@ -3,9 +3,13 @@ package sql
 import (
 	"context"
 	"embed"
+	"errors"
 	"io"
 	"io/fs"
 	"log"
+	"os"
+	"path/filepath"
+	"strings"
 	"time"
 
 	"github.com/jmoiron/sqlx"
@@ -15,6 +19,7 @@ import (
 
 type Database struct {
 	DB                    *sqlx.DB
+	baseURL               string
 	url                   string
 	maxOpenConnections    int
 	maxIdleConnections    int
@@ -42,10 +47,11 @@ func NewDatabase(opts NewDatabaseOptions) *Database {
 	// - Set WAL mode (not strictly necessary each time because it's persisted in the database, but good for first run)
 	// - Set busy timeout, so concurrent writers wait on each other instead of erroring immediately
 	// - Enable foreign key checks
-	opts.URL += "?_journal=WAL&_timeout=5000&_fk=true"
+	url := opts.URL + "?_journal=WAL&_timeout=5000&_fk=true"
 
 	return &Database{
-		url:                   opts.URL,
+		baseURL:               opts.URL,
+		url:                   url,
 		maxOpenConnections:    opts.MaxOpenConnections,
 		maxIdleConnections:    opts.MaxIdleConnections,
 		connectionMaxLifetime: opts.ConnectionMaxLifetime,
@@ -99,4 +105,18 @@ func (d *Database) getMigrations() fs.FS {
 		panic(err)
 	}
 	return fsys
+}
+
+// GetPrimary instance name if this is a replica, otherwise the empty string.
+func (d *Database) GetPrimary() (string, error) {
+	basePath := strings.TrimPrefix(d.baseURL, "file:")
+	primaryPath := filepath.Join(filepath.Dir(basePath), ".primary")
+	primary, err := os.ReadFile(primaryPath)
+	if err != nil {
+		if errors.Is(err, os.ErrNotExist) {
+			return "", nil
+		}
+		return "", err
+	}
+	return string(primary), nil
 }

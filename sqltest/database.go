@@ -6,7 +6,7 @@ import (
 
 	"github.com/maragudk/env"
 
-	"github.com/maragudk/sqlite-app/sql"
+	"github.com/maragudk/litefs-app/sql"
 )
 
 // CreateDatabase for testing.
