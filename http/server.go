@@ -12,7 +12,7 @@ import (
 
 	"github.com/go-chi/chi/v5"
 
-	"github.com/maragudk/sqlite-app/sql"
+	"github.com/maragudk/litefs-app/sql"
 )
 
 type Server struct {
@@ -20,6 +20,7 @@ type Server struct {
 	database *sql.Database
 	log      *log.Logger
 	mux      chi.Router
+	region   string
 	server   *http.Server
 }
 
@@ -28,6 +29,7 @@ type NewServerOptions struct {
 	Host     string
 	Log      *log.Logger
 	Port     int
+	Region   string
 }
 
 // NewServer returns an initialized, but unstarted Server.
@@ -45,6 +47,7 @@ func NewServer(opts NewServerOptions) *Server {
 		database: opts.Database,
 		log:      opts.Log,
 		mux:      mux,
+		region:   opts.Region,
 		server: &http.Server{
 			Addr:              address,
 			Handler:           mux,
@@ -52,6 +55,7 @@ func NewServer(opts NewServerOptions) *Server {
 			ReadHeaderTimeout: 5 * time.Second,
 			WriteTimeout:      5 * time.Second,
 			IdleTimeout:       5 * time.Second,
+			ErrorLog:          opts.Log,
 		},
 	}
 }

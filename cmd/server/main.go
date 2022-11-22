@@ -12,8 +12,8 @@ import (
 	"github.com/maragudk/errors"
 	"golang.org/x/sync/errgroup"
 
-	"github.com/maragudk/sqlite-app/http"
-	"github.com/maragudk/sqlite-app/sql"
+	"github.com/maragudk/litefs-app/http"
+	"github.com/maragudk/litefs-app/sql"
 )
 
 func main() {
@@ -48,6 +48,7 @@ func start() int {
 		Host:     env.GetStringOrDefault("HOST", ""),
 		Log:      log,
 		Port:     env.GetIntOrDefault("PORT", 8080),
+		Region:   env.GetStringOrDefault("FLY_REGION", "unknown"),
 	})
 
 	eg, ctx := errgroup.WithContext(ctx)

@@ -11,13 +11,15 @@ import (
 	"github.com/maragudk/gomponents-heroicons/solid"
 	. "github.com/maragudk/gomponents/html"
 
-	"github.com/maragudk/sqlite-app/model"
+	"github.com/maragudk/litefs-app/model"
 )
 
-func HomePage(articles []model.Article, search string) g.Node {
+func HomePage(articles []model.Article, search, region string) g.Node {
 	return Page(PageProps{Title: "Home", Description: "All articles."},
 
 		H1(g.Text("Articles")),
+
+		P(g.Rawf(`Served to you from region <strong>%v</strong>.`, region)),
 
 		g.If(len(articles) == 0 && search == "",
 			P(g.Raw(`No articles yet. <a href="/new">Create a new one</a>.`)),

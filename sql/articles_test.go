@@ -7,8 +7,8 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"github.com/maragudk/sqlite-app/model"
-	"github.com/maragudk/sqlite-app/sqltest"
+	"github.com/maragudk/litefs-app/model"
+	"github.com/maragudk/litefs-app/sqltest"
 )
 
 func TestDatabase_GetTOC(t *testing.T) {

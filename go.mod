@@ -1,4 +1,4 @@
-module github.com/maragudk/sqlite-app
+module github.com/maragudk/litefs-app
 
 go 1.19
 
