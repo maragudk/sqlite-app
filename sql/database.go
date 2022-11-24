@@ -118,5 +118,5 @@ func (d *Database) GetPrimary() (string, error) {
 		}
 		return "", err
 	}
-	return string(primary), nil
+	return strings.TrimSpace(string(primary)), nil
 }
