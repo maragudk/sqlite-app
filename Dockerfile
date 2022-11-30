@@ -1,4 +1,4 @@
-FROM flyio/litefs:0.3.0-beta5 AS litefs
+FROM flyio/litefs:0.3.0-beta6 AS litefs
 
 FROM golang AS builder
 WORKDIR /src
