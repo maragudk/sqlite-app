@@ -1,9 +1,9 @@
 module github.com/maragudk/sqlite-app
 
-go 1.19
+go 1.22
 
 require (
-	github.com/go-chi/chi/v5 v5.2.2
+	github.com/go-chi/chi/v5 v5.2.4
 	github.com/jmoiron/sqlx v1.3.5
 	github.com/maragudk/env v0.1.2
 	github.com/maragudk/errors v0.1.1
